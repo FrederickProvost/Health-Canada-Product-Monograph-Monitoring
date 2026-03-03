@@ -70,36 +70,36 @@ EMAIL_FROM = os.environ.get("EMAIL_FROM", SMTP_USER)
 EMAIL_TO = os.environ.get("EMAIL_TO", "")  # comma-separated
 EMAIL_SUBJECT = os.environ.get("EMAIL_SUBJECT", "🚨 DPD PM/Vet date changed")
 
-def send_email_alert(changes_df: pd.DataFrame):
-    """Send alert email with list of changed drug codes."""
+def send_email_alert(changes_df):
     if not (SMTP_SERVER and SMTP_USER and SMTP_PASSWORD and EMAIL_TO):
-        print("ℹ️ Email not configured (missing SMTP_* or EMAIL_TO). Skipping email.")
+        print("ℹ️ Email non configuré — alerte ignorée")
         return
 
     msg = EmailMessage()
     msg["From"] = EMAIL_FROM
     msg["To"] = EMAIL_TO
-    msg["Subject"] = EMAIL_SUBJECT
+    msg["Subject"] = "🚨 Health Canada – Product Monograph date changed"
 
-    lines = []
-    lines.append("Health Canada DPD — Product Monograph / Veterinary Labelling date changed")
-    lines.append("")
-    lines.append(f"Run time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    lines.append("")
-    lines.append("Changed items:")
-    lines.append("")
+    # ✅ UNIQUEMENT la liste des Drug_code
+    drug_codes = sorted(changes_df["Drug_code"].astype(str).unique())
 
-    for _, r in changes_df.iterrows():
-        lines.append(f"- Drug_code {r['Drug_code']}: {r.get('old_pm_date')} → {r.get('pm_date')}  | {r.get('info_url')}")
+    body = [
+        "The Product Monograph / Veterinary Labelling date has changed",
+        "for the following Drug_code(s):",
+        "",
+    ]
 
-    msg.set_content("\n".join(lines))
+    for dc in drug_codes:
+        body.append(f"- {dc}")
+
+    msg.set_content("\n".join(body))
 
     with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
         server.starttls()
         server.login(SMTP_USER, SMTP_PASSWORD)
         server.send_message(msg)
 
-    print("✅ Alert email sent.")
+    print(f"✅ Email envoyé ({len(drug_codes)} Drug_code)")
 
 # =========================
 # MAIN
