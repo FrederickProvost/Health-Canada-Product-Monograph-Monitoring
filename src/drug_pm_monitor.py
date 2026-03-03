@@ -72,21 +72,40 @@ df_current.to_csv(DATASET_FILE, index=False)
 print(f"✅ Dataset Power BI généré : {DATASET_FILE}")
 
 # ==============================
-# 5️⃣ GESTION DE L’HISTORIQUE
+# 5️⃣ GESTION DE L’HISTORIQUE (ROBUSTE)
 # ==============================
+EXPECTED_COLS = {"drug_code", "pm_update_date", "detected_on"}
+
 if HISTORY_FILE.exists():
-    df_history = pd.read_csv(HISTORY_FILE, parse_dates=["pm_update_date", "detected_on"])
+    df_history = pd.read_csv(HISTORY_FILE)
+
+    # ✅ Cas : ancien format → on réinitialise proprement
+    if not EXPECTED_COLS.issubset(df_history.columns):
+        print("⚠️ Historique existant avec ancien format détecté → réinitialisation")
+        df_history = pd.DataFrame(columns=EXPECTED_COLS)
 else:
-    df_history = pd.DataFrame(
-        columns=["drug_code", "pm_update_date", "detected_on"]
-    )
+    df_history = pd.DataFrame(columns=EXPECTED_COLS)
 
+# Normalisation types
 df_history["drug_code"] = df_history["drug_code"].astype(str)
+df_history["pm_update_date"] = pd.to_datetime(
+    df_history["pm_update_date"], errors="coerce"
+).dt.date
+df_history["detected_on"] = pd.to_datetime(
+    df_history["detected_on"], errors="coerce"
+).dt.date
 
+# ==============================
 # Détection des changements
+# ==============================
+last_known = (
+    df_history
+    .sort_values("detected_on")
+    .drop_duplicates("drug_code", keep="last")
+)
+
 merged = df_current.merge(
-    df_history.sort_values("detected_on")
-    .drop_duplicates("drug_code", keep="last"),
+    last_known,
     on="drug_code",
     how="left",
     suffixes=("", "_old")
@@ -104,10 +123,10 @@ new_history_rows = changed[[
     "detected_on"
 ]]
 
-# Append historique
+# Append et sauvegarde
 df_history = pd.concat([df_history, new_history_rows], ignore_index=True)
-
 df_history.to_csv(HISTORY_FILE, index=False)
+
 print(f"✅ Historique mis à jour : {HISTORY_FILE}")
 
 # ==============================
