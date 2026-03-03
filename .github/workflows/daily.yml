@@ -32,8 +32,8 @@ jobs:
       # =========================
       # Run PM monitor
       # ➜ Génère :
-      #   - data/drug_pm_updates.csv  (dataset Power BI)
-      #   - data/dpd_pm_history.csv   (historique)
+      #   - Data/drug_pm_updates.csv  (dataset Power BI)
+      #   - Data/dpd_pm_history.csv   (historique)
       # =========================
       - name: Run PM monitor
         run: |
@@ -47,8 +47,8 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add data/drug_pm_updates.csv
-          git add data/dpd_pm_history.csv
+          git add Data/drug_pm_updates.csv
+          git add Data/dpd_pm_history.csv
 
           # Commit seulement s'il y a un changement
           git diff --cached --quiet && echo "✅ No changes to commit" || (
