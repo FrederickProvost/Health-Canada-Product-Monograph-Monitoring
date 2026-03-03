@@ -1,5 +1,8 @@
 name: Daily DPD PM Monitor
 
+permissions:
+  contents: write   # ✅ OBLIGATOIRE pour git push
+
 on:
   schedule:
     - cron: "0 11 * * *"   # Tous les jours à 11:00 UTC (~6h Toronto)
@@ -10,17 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # =========================
-      # Checkout
-      # =========================
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           persist-credentials: true
 
-      # =========================
-      # Python setup
-      # =========================
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -29,28 +26,17 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # =========================
-      # Run PM monitor
-      # ➜ Génère :
-      #   - Data/drug_pm_updates.csv  (dataset Power BI)
-      #   - Data/dpd_pm_history.csv   (historique)
-      # =========================
       - name: Run PM monitor
         run: |
           python src/drug_pm_monitor.py
 
-      # =========================
-      # Commit automatique des datasets
-      # =========================
       - name: Commit updated datasets
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add Data/drug_pm_updates.csv
-          git add Data/dpd_pm_history.csv
+          git add data/
 
-          # Commit seulement s'il y a un changement
           git diff --cached --quiet && echo "✅ No changes to commit" || (
             git commit -m "Update PM datasets (automated)"
             git push
