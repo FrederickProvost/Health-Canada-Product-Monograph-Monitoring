@@ -10,11 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # =========================
+      # Checkout
+      # =========================
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           persist-credentials: true
 
+      # =========================
+      # Python setup
+      # =========================
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -23,26 +29,29 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      # =========================
+      # Run PM monitor
+      # ➜ Génère :
+      #   - data/drug_pm_updates.csv  (dataset Power BI)
+      #   - data/dpd_pm_history.csv   (historique)
+      # =========================
       - name: Run PM monitor
-        env:
-          SMTP_SERVER: smtp.office365.com
-          SMTP_PORT: "587"
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
-          EMAIL_TO: ${{ secrets.EMAIL_TO }}
         run: |
           python src/drug_pm_monitor.py
 
-      # ✅ NOUVEAU STEP : commit automatique de l’historique
-      - name: Commit updated history
+      # =========================
+      # Commit automatique des datasets
+      # =========================
+      - name: Commit updated datasets
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
+          git add data/drug_pm_updates.csv
           git add data/dpd_pm_history.csv
 
           # Commit seulement s'il y a un changement
-          git diff --cached --quiet || git commit -m "Update PM history (automated)"
-
-          git push
+          git diff --cached --quiet && echo "✅ No changes to commit" || (
+            git commit -m "Update PM datasets (automated)"
+            git push
+          )
