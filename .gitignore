@@ -1,11 +1,10 @@
-# Python
 __pycache__/
 *.pyc
+.env
 
-# Data outputs
-data/dpd_pm_history.csv
+# outputs temporaires (ok à ignorer)
 data/dpd_pm_current.csv
 data/dpd_pm_changes.csv
 
-# Secrets
-.env
+# ⚠️ NE PAS ignorer l’historique
+# data/dpd_pm_history.csv  ← DOIT ÊTRE ABSENT DU .gitignore
