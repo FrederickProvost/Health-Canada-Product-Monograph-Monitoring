@@ -16,7 +16,7 @@ REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
 DATA_DIR = os.path.join(REPO_ROOT, "data")
 os.makedirs(DATA_DIR, exist_ok=True)
 
-INPUT_XLSX = os.environ.get("INPUT_XLSX", os.path.join(DATA_DIR, "Drugcode_à_vérifier.xlsx"))
+INPUT_XLSX = os.environ.get("INPUT_XLSX", os.path.join(DATA_DIR, "Drugcode_a_verifier.xlsx"))
 INPUT_SHEET = os.environ.get("INPUT_SHEET", "0")
 INPUT_COLUMN = os.environ.get("INPUT_COLUMN", "Drug_code")
 
