@@ -13,7 +13,7 @@ from datetime import datetime
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
 
-DATA_DIR = os.path.join(REPO_ROOT, "data")
+DATA_DIR = os.path.join(REPO_ROOT, "Data")
 os.makedirs(DATA_DIR, exist_ok=True)
 
 INPUT_XLSX = os.environ.get("INPUT_XLSX", os.path.join(DATA_DIR, "Drugcode_a_verifier.xlsx"))
