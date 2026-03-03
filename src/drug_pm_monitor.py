@@ -3,17 +3,15 @@ import re
 import time
 import requests
 import pandas as pd
-import smtplib
-from email.message import EmailMessage
 from datetime import datetime
 
 # =========================
-# PATHS (repo-friendly)
+# PATHS
 # =========================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
 
-DATA_DIR = os.path.join(REPO_ROOT, "Data")
+DATA_DIR = os.environ.get("DATA_DIR", os.path.join(REPO_ROOT, "Data"))  # <-- tu es en /Data/ dans tes logs
 os.makedirs(DATA_DIR, exist_ok=True)
 
 INPUT_XLSX = os.environ.get("INPUT_XLSX", os.path.join(DATA_DIR, "Drugcode_a_verifier.xlsx"))
@@ -30,19 +28,17 @@ CHANGES_CSV = os.environ.get("CHANGES_CSV", os.path.join(DATA_DIR, "dpd_pm_chang
 INFO_URL = "https://health-products.canada.ca/dpd-bdpp/info?lang=eng&code={code}"
 
 # =========================
-# EXTRACTION (robust)
+# EXTRACTION
 # =========================
 DATE_RE = re.compile(r"Date:\s*([0-9]{4}-[0-9]{2}-[0-9]{2})")
 PDF_RE = re.compile(r'href="([^"]*dpd_pm[^"]*\.pdf)"', re.IGNORECASE)
 
 def strip_html_to_text(html: str) -> str:
-    """Remove HTML tags -> plain text; makes date extraction robust even if label is split by <br>/<span>."""
     text = re.sub(r"<[^>]+>", " ", html)
     text = re.sub(r"\s+", " ", text).strip()
     return text
 
 def extract_pm_date_and_pdf(html: str):
-    """Extract pm_date + pm_pdf_url from DPD product info page."""
     text = strip_html_to_text(html)
 
     pm_date = None
@@ -60,46 +56,70 @@ def extract_pm_date_and_pdf(html: str):
     return pm_date, pm_pdf_url
 
 # =========================
-# EMAIL (SMTP) via ENV
+# EMAIL via MICROSOFT GRAPH (OAuth)
 # =========================
-SMTP_SERVER = os.environ.get("SMTP_SERVER", "")
-SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
-SMTP_USER = os.environ.get("SMTP_USER", "")
-SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")  # set via GitHub Secret
-EMAIL_FROM = os.environ.get("EMAIL_FROM", SMTP_USER)
-EMAIL_TO = os.environ.get("EMAIL_TO", "")  # comma-separated
-EMAIL_SUBJECT = os.environ.get("EMAIL_SUBJECT", "🚨 DPD PM/Vet date changed")
+# Secrets à fournir dans GitHub:
+# TENANT_ID, CLIENT_ID, CLIENT_SECRET, SENDER_UPN, EMAIL_TO
+# EMAIL_TO peut être: "a@x.com,b@y.com"
+def send_email_alert_graph(changes_df: pd.DataFrame):
+    tenant_id = os.environ.get("TENANT_ID", "")
+    client_id = os.environ.get("CLIENT_ID", "")
+    client_secret = os.environ.get("CLIENT_SECRET", "")
+    sender_upn = os.environ.get("SENDER_UPN", "")
+    email_to = os.environ.get("EMAIL_TO", "")
 
-def send_email_alert(changes_df):
-    if not (SMTP_SERVER and SMTP_USER and SMTP_PASSWORD and EMAIL_TO):
-        print("ℹ️ Email non configuré — alerte ignorée")
+    if not all([tenant_id, client_id, client_secret, sender_upn, email_to]):
+        print("ℹ️ Graph email not configured (missing TENANT_ID/CLIENT_ID/CLIENT_SECRET/SENDER_UPN/EMAIL_TO). Skipping email.")
         return
 
-    msg = EmailMessage()
-    msg["From"] = EMAIL_FROM
-    msg["To"] = EMAIL_TO
-    msg["Subject"] = "🚨 Health Canada – Product Monograph date changed"
+    # Liste des drug_codes changés (UNIQUEMENT)
+    drug_codes = sorted(changes_df["Drug_code"].astype(str).unique().tolist())
+    body_lines = ["Drug_code(s) with changed Product Monograph date:", ""] + [f"- {dc}" for dc in drug_codes]
+    body_text = "\n".join(body_lines)
 
-    # ✅ UNIQUEMENT la liste des Drug_code
-    drug_codes = sorted(changes_df["Drug_code"].astype(str).unique())
+    # Acquire token (client credentials)
+    import msal  # dependency
 
-    body = [
-        "The Product Monograph / Veterinary Labelling date has changed",
-        "for the following Drug_code(s):",
-        "",
-    ]
+    authority = f"https://login.microsoftonline.com/{tenant_id}"
+    app = msal.ConfidentialClientApplication(
+        client_id=client_id,
+        authority=authority,
+        client_credential=client_secret
+    )
+    token = app.acquire_token_for_client(scopes=["https://graph.microsoft.com/.default"])
+    if "access_token" not in token:
+        raise RuntimeError(f"Unable to acquire token: {token}")
 
-    for dc in drug_codes:
-        body.append(f"- {dc}")
+    access_token = token["access_token"]
 
-    msg.set_content("\n".join(body))
+    # SendMail endpoint for app-only: /users/{sender_upn}/sendMail
+    # (client credentials -> you target a user mailbox) [4](https://stackoverflow.com/questions/76805337/python-send-email-using-graph-api-and-office365-rest-python-client)[6](https://stackoverflow.com/questions/69080522/send-mail-via-microsoft-graph-as-application-any-user)
+    endpoint = f"https://graph.microsoft.com/v1.0/users/{sender_upn}/sendMail"
 
-    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-        server.starttls()
-        server.login(SMTP_USER, SMTP_PASSWORD)
-        server.send_message(msg)
+    recipients = [{"emailAddress": {"address": addr.strip()}} for addr in email_to.split(",") if addr.strip()]
 
-    print(f"✅ Email envoyé ({len(drug_codes)} Drug_code)")
+    payload = {
+        "message": {
+            "subject": "🚨 Health Canada – PM date changed",
+            "body": {
+                "contentType": "Text",
+                "content": body_text
+            },
+            "toRecipients": recipients
+        },
+        "saveToSentItems": "false"
+    }
+
+    resp = requests.post(
+        endpoint,
+        headers={"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"},
+        json=payload,
+        timeout=30
+    )
+    if resp.status_code >= 300:
+        raise RuntimeError(f"Graph sendMail failed {resp.status_code}: {resp.text}")
+
+    print(f"✅ Graph email sent ({len(drug_codes)} Drug_code).")
 
 # =========================
 # MAIN
@@ -107,9 +127,7 @@ def send_email_alert(changes_df):
 def main():
     print(f"📥 Reading Excel: {INPUT_XLSX}")
 
-    # sheet index or name
-    sheet = int(INPUT_SHEET) if INPUT_SHEET.isdigit() else INPUT_SHEET
-
+    sheet = int(INPUT_SHEET) if str(INPUT_SHEET).isdigit() else INPUT_SHEET
     df_in = pd.read_excel(INPUT_XLSX, sheet_name=sheet, dtype=str)
 
     if INPUT_COLUMN not in df_in.columns:
@@ -129,8 +147,7 @@ def main():
         url = INFO_URL.format(code=code)
 
         pm_date, pm_pdf = None, None
-        status = None
-        error = None
+        status, error = None, None
 
         try:
             r = session.get(url, timeout=30)
@@ -149,23 +166,20 @@ def main():
             "error": error
         })
 
-        if i % 10 == 0 or i == len(codes):
-            found = sum(1 for x in rows if x.get("pm_date"))
-            print(f"Progress: {i}/{len(codes)} | pm_date found: {found}")
-
+        found = sum(1 for x in rows if x.get("pm_date"))
+        print(f"Progress: {i}/{len(codes)} | pm_date found: {found}")
         time.sleep(0.2)
 
     df_current = pd.DataFrame(rows)
     df_current.to_csv(CURRENT_CSV, index=False, encoding="utf-8-sig")
     print(f"✅ Current snapshot written: {CURRENT_CSV}")
 
-    # Load history (previous run)
+    # History
     if os.path.exists(HISTORY_CSV):
         df_hist = pd.read_csv(HISTORY_CSV, dtype=str)
     else:
         df_hist = pd.DataFrame(columns=["Drug_code", "pm_date"])
 
-    # Compare
     df_compare = df_current.merge(
         df_hist.rename(columns={"pm_date": "old_pm_date"}),
         on="Drug_code",
@@ -180,13 +194,13 @@ def main():
     changes.to_csv(CHANGES_CSV, index=False, encoding="utf-8-sig")
     print(f"✅ Changes written: {CHANGES_CSV} | count={len(changes)}")
 
-    # Send email if changes
+    # ✅ Email ONLY drug_codes that changed
     if len(changes) > 0:
-        send_email_alert(changes)
+        send_email_alert_graph(changes)
     else:
         print("✅ No changes detected. No email sent.")
 
-    # Update history (store only last known pm_date)
+    # Update history
     df_current[["Drug_code", "pm_date"]].to_csv(HISTORY_CSV, index=False, encoding="utf-8-sig")
     print(f"✅ History updated: {HISTORY_CSV}")
 
