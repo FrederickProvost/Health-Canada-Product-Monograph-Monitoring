@@ -74,7 +74,7 @@ print(f"✅ Dataset Power BI généré : {DATASET_FILE}")
 # ==============================
 # 5️⃣ GESTION DE L’HISTORIQUE (ROBUSTE)
 # ==============================
-EXPECTED_COLS = {"drug_code", "pm_update_date", "detected_on"}
+EXPECTED_COLS = ["drug_code", "pm_update_date", "detected_on"]
 
 if HISTORY_FILE.exists():
     df_history = pd.read_csv(HISTORY_FILE)
