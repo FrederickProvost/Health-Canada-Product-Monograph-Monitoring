@@ -1,8 +1,8 @@
-name: Daily Health Canada PM Monitor
+name: Daily DPD PM Monitor
 
 on:
   schedule:
-    - cron: "0 11 * * *"   # every day at 11:00 UTC (~6am Toronto)
+    - cron: "0 11 * * *"   # Tous les jours à 11:00 UTC (~6h Toronto)
   workflow_dispatch:
 
 jobs:
@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -19,11 +21,28 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
-      - name: Run monitor
+      - name: Run PM monitor
         env:
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          SMTP_SERVER: smtp.office365.com
+          SMTP_PORT: "587"
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
         run: |
           python src/drug_pm_monitor.py
+
+      # ✅ NOUVEAU STEP : commit automatique de l’historique
+      - name: Commit updated history
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add data/dpd_pm_history.csv
+
+          # Commit seulement s'il y a un changement
+          git diff --cached --quiet || git commit -m "Update PM history (automated)"
+
+          git push
