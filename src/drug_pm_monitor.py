@@ -58,7 +58,7 @@ def fetch_pm_date_from_dpd(drug_code: str):
         # Cherche le pattern "Product Monograph/Veterinary Labelling: Date: YYYY-MM-DD"
         # (tolérant aux espaces / retours ligne)
         m = re.search(
-            r"Product\s+Monograph\/Veterinary\s+Labelling:\s*Date:\s*([0-9]{4}-[0-9]{2}-[0-9]{2})",
+            r"Product\s+Monograph.*?Veterinary.*?Date[^0-9]*([0-9]{4}-[0-9]{2}-[0-9]{2})",
             html,
             flags=re.IGNORECASE
         )
