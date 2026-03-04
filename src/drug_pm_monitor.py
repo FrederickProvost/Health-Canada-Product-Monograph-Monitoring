@@ -40,12 +40,8 @@ df_input["Drug_code"] = df_input["Drug_code"].astype(str).str.strip()
 # ==============================
 # 2️⃣ EXTRACTION DES DATES PM (DPD page)
 # ==============================
+
 def fetch_pm_date_from_dpd(drug_code: str):
-    """
-    Va sur la page DPD 'Product information' et extrait
-    la date associée à 'Product Monograph/Veterinary Labelling: Date: YYYY-MM-DD'
-    Retourne (pm_date_str, url, status_note)
-    """
     url = BASE_URL.format(code=drug_code)
 
     try:
@@ -55,25 +51,28 @@ def fetch_pm_date_from_dpd(drug_code: str):
 
         html = r.text
 
-        # Cherche le pattern "Product Monograph/Veterinary Labelling: Date: YYYY-MM-DD"
-        # (tolérant aux espaces / retours ligne)
+        # ✅ Regex robuste pour DPD
         m = re.search(
             r"Product\s+Monograph.*?Veterinary.*?Date[^0-9]*([0-9]{4}-[0-9]{2}-[0-9]{2})",
             html,
-            flags=re.IGNORECASE
+            flags=re.IGNORECASE | re.DOTALL
         )
+
         if m:
             return (m.group(1), url, "OK")
 
-        # Certains produits affichent "Electronic product monograph is not available"
-        if re.search(r"Electronic\s+product\s+monograph\s+is\s+not\s+available", html, flags=re.IGNORECASE):
+        if re.search(
+            r"Electronic\s+product\s+monograph\s+is\s+not\s+available",
+            html,
+            flags=re.IGNORECASE
+        ):
             return (None, url, "NO_E_PM")
 
-        # Sinon : contenu inattendu / pas trouvé
         return (None, url, "NOT_FOUND")
 
     except requests.RequestException as e:
         return (None, url, f"REQUEST_ERR: {type(e).__name__}")
+
 
 
 results = []
