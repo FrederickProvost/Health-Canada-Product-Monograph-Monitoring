@@ -1,4 +1,5 @@
 pandas
-requests
 openpyxl
-msal
+requests
+beautifulsoup4
+lxml
