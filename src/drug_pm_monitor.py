@@ -1,346 +1,204 @@
-# -*- coding: utf-8 -*-
-"""
-Health Canada DPD - Product Monograph monitoring
-- Input:  Drugcode_a_verifier.xlsx (colonne: Drug_code)
-- Output: Data/drug_pm_updates.csv (avec has_changed)
-- History: Data/dpd_pm_history.csv (drug_code, pm_update_date, detected_on, dpd_url)
-
-Requirements:
-  pip install pandas openpyxl requests beautifulsoup4 lxml
-"""
-
-from __future__ import annotations
-
-import re
-import sys
-import time
-from dataclasses import dataclass
-from datetime import date
-from pathlib import Path
-from typing import Optional, Tuple, List
-
 import pandas as pd
+from pathlib import Path
+from datetime import datetime
+import re
 import requests
-from bs4 import BeautifulSoup
 
+# ==============================
+# CONFIG
+# ==============================
+DATA_DIR = Path("Data")
+INPUT_EXCEL = DATA_DIR / "Drugcode_a_verifier.xlsx"
 
-# -----------------------------
-# Configuration
-# -----------------------------
-ROOT = Path(__file__).resolve().parents[1]  # repo root assuming src/drug_pm_monitor.py
-DATA_DIR = ROOT / "Data"
+DATASET_FILE = DATA_DIR / "drug_pm_updates.csv"
+HISTORY_FILE = DATA_DIR / "dpd_pm_history.csv"
+
 DATA_DIR.mkdir(exist_ok=True)
 
-INPUT_EXCEL = ROOT / "Drugcode_a_verifier.xlsx"
-HISTORY_CSV = DATA_DIR / "dpd_pm_history.csv"
-OUTPUT_UPDATES_CSV = DATA_DIR / "drug_pm_updates.csv"
+BASE_URL = "https://health-products.canada.ca/dpd-bdpp/info?lang=eng&code={code}"
 
-# DPD page template (works with drug code)
-DPD_URL_TEMPLATE = "https://health-products.canada.ca/dpd-bdpp/info?lang=en&code={drug_code}"
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (compatible; PM-Monitor/1.0; +https://health-products.canada.ca/)",
+    "Accept-Language": "en-CA,en;q=0.9,fr-CA;q=0.8,fr;q=0.7"
+}
 
-# Requests settings
-USER_AGENT = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "Chrome/122.0.0.0 Safari/537.36"
-)
-REQUEST_TIMEOUT = 30
-RETRY = 3
-SLEEP_BETWEEN = 0.6  # be polite
+TIMEOUT = 30
 
+# ==============================
+# 1️⃣ LECTURE DES DRUG CODES À VÉRIFIER
+# ==============================
+if not INPUT_EXCEL.exists():
+    raise FileNotFoundError(f"❌ Fichier introuvable : {INPUT_EXCEL}")
 
-# -----------------------------
-# Helpers
-# -----------------------------
-def normalize_drug_code(x: str) -> str:
-    """Keep digits only; returns as string."""
-    if x is None:
-        return ""
-    s = str(x).strip()
-    s = re.sub(r"[^\d]", "", s)
-    return s
+df_input = pd.read_excel(INPUT_EXCEL, engine="openpyxl")
 
+if "Drug_code" not in df_input.columns:
+    raise ValueError("❌ La colonne 'Drug_code' est requise dans le fichier Excel")
 
-def normalize_date_string(s: str) -> str:
-    """
-    Normalize date string to ISO 'YYYY-MM-DD' if possible.
-    Accepts formats like:
-      - 2026-03-04
-      - 2026/03/04
-      - 2013 11 01
-      - 2013-11-01
-      - 01/11/2013 (will try)
-      - March 4, 2026 (will try)
-    If can't parse reliably, returns cleaned original.
-    """
-    if not s:
-        return ""
+df_input["Drug_code"] = df_input["Drug_code"].astype(str).str.strip()
 
-    s0 = " ".join(str(s).strip().split())
-    s0 = s0.replace(".", "").replace(",", "")
+# ==============================
+# 2️⃣ EXTRACTION DES DATES PM (DPD page)
+# ==============================
 
-    # Common numeric patterns
-    # yyyy-mm-dd / yyyy/mm/dd / yyyy mm dd
-    m = re.search(r"\b(20\d{2})[\/\-\s](\d{1,2})[\/\-\s](\d{1,2})\b", s0)
-    if m:
-        y, mo, d = m.group(1), int(m.group(2)), int(m.group(3))
-        return f"{y}-{mo:02d}-{d:02d}"
+def fetch_pm_date_from_dpd(drug_code: str):
+    url = BASE_URL.format(code=drug_code)
 
-    # dd/mm/yyyy or mm/dd/yyyy (ambiguous) => try day-first if day > 12
-    m = re.search(r"\b(\d{1,2})[\/\-\s](\d{1,2})[\/\-\s](20\d{2})\b", s0)
-    if m:
-        a, b, y = int(m.group(1)), int(m.group(2)), m.group(3)
-        # Heuristic:
-        # if a > 12 => a is day
-        # elif b > 12 => b is day (so a is month)
-        # else default to day-first (Canada)
-        if a > 12:
-            d, mo = a, b
-        elif b > 12:
-            mo, d = a, b
-        else:
-            d, mo = a, b
-        return f"{y}-{mo:02d}-{d:02d}"
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
+        if r.status_code != 200:
+            return (None, url, f"HTTP_{r.status_code}")
 
-    # Month name patterns
-    # e.g., March 4 2026 / 4 March 2026
-    month_map = {
-        "jan": 1, "january": 1,
-        "feb": 2, "february": 2,
-        "mar": 3, "march": 3,
-        "apr": 4, "april": 4,
-        "may": 5,
-        "jun": 6, "june": 6,
-        "jul": 7, "july": 7,
-        "aug": 8, "august": 8,
-        "sep": 9, "sept": 9, "september": 9,
-        "oct": 10, "october": 10,
-        "nov": 11, "november": 11,
-        "dec": 12, "december": 12,
-    }
-    s_lower = s0.lower()
-    # March 4 2026
-    m = re.search(r"\b([a-z]{3,9})\s+(\d{1,2})\s+(20\d{2})\b", s_lower)
-    if m and m.group(1) in month_map:
-        mo = month_map[m.group(1)]
-        d = int(m.group(2))
-        y = m.group(3)
-        return f"{y}-{mo:02d}-{d:02d}"
-    # 4 March 2026
-    m = re.search(r"\b(\d{1,2})\s+([a-z]{3,9})\s+(20\d{2})\b", s_lower)
-    if m and m.group(2) in month_map:
-        d = int(m.group(1))
-        mo = month_map[m.group(2)]
-        y = m.group(3)
-        return f"{y}-{mo:02d}-{d:02d}"
+        html = r.text
 
-    return s0
+        # ✅ Regex robuste pour DPD
+        m = re.search(
+            r"Product\s+Monograph.*?Veterinary.*?Date[^0-9]*([0-9]{4}-[0-9]{2}-[0-9]{2})",
+            html,
+            flags=re.IGNORECASE | re.DOTALL
+        )
 
-
-def request_with_retry(url: str) -> str:
-    headers = {"User-Agent": USER_AGENT}
-    last_err = None
-    for i in range(1, RETRY + 1):
-        try:
-            r = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT)
-            r.raise_for_status()
-            return r.text
-        except Exception as e:
-            last_err = e
-            time.sleep(1.2 * i)
-    raise RuntimeError(f"Failed to fetch {url} after {RETRY} tries. Last error: {last_err}")
-
-
-def extract_pm_update_date_from_html(html: str) -> Optional[str]:
-    """
-    Attempt to extract PM update date from DPD info page HTML.
-
-    Strategy:
-    1) Parse text with BeautifulSoup; search around keywords.
-    2) Use multiple regex patterns to catch dates near "Product Monograph" / "Veterinary Product Monograph"
-       and/or "Date" labels.
-    Returns ISO-like date string if found, else None.
-    """
-    soup = BeautifulSoup(html, "lxml")
-    text = soup.get_text(" ", strip=True)
-    if not text:
-        return None
-
-    # Common keywords on DPD pages
-    keywords = [
-        "Product Monograph",
-        "Veterinary Product Monograph",
-        "Product monograph",
-        "Veterinary product monograph",
-        "Monograph",
-        "Monographie",
-        "Monographie de produit",
-    ]
-
-    # Candidate date regex (handles yyyy-mm-dd, yyyy/mm/dd, dd/mm/yyyy, Month dd yyyy)
-    date_regex = r"((?:20\d{2}[\/\-\s]\d{1,2}[\/\-\s]\d{1,2})|(?:\d{1,2}[\/\-\s]\d{1,2}[\/\-\s]20\d{2})|(?:[A-Za-z]{3,9}\s+\d{1,2}\s+20\d{2})|(?:\d{1,2}\s+[A-Za-z]{3,9}\s+20\d{2}))"
-
-    # 1) Try: keyword within N chars then date
-    for kw in keywords:
-        pattern = rf"{re.escape(kw)}(.{{0,120}}?){date_regex}"
-        m = re.search(pattern, text, flags=re.IGNORECASE)
         if m:
-            raw_date = m.group(2)
-            return normalize_date_string(raw_date)
+            return (m.group(1), url, "OK")
 
-    # 2) Try: "Date" near monograph mention
-    # E.g., "... Product Monograph Date 2026-03-04 ..."
-    pattern = rf"(Product\s+Monograph|Veterinary\s+Product\s+Monograph).{{0,80}}?(Date|Updated|Update|Date\s+de).{{0,40}}?{date_regex}"
-    m = re.search(pattern, text, flags=re.IGNORECASE)
-    if m:
-        raw_date = m.group(3)
-        return normalize_date_string(raw_date)
+        if re.search(
+            r"Electronic\s+product\s+monograph\s+is\s+not\s+available",
+            html,
+            flags=re.IGNORECASE
+        ):
+            return (None, url, "NO_E_PM")
 
-    # 3) Fallback: any date near "Monograph"
-    pattern = rf"(Monograph|Monographie).{{0,80}}?{date_regex}"
-    m = re.search(pattern, text, flags=re.IGNORECASE)
-    if m:
-        raw_date = m.group(2)
-        return normalize_date_string(raw_date)
+        return (None, url, "NOT_FOUND")
 
-    return None
+    except requests.RequestException as e:
+        return (None, url, f"REQUEST_ERR: {type(e).__name__}")
 
 
-# -----------------------------
-# Core logic
-# -----------------------------
-def load_drug_codes_from_excel(path: Path) -> List[str]:
-    if not path.exists():
-        raise FileNotFoundError(f"Input Excel not found: {path}")
 
-    df = pd.read_excel(path, engine="openpyxl", dtype=str)
-    # Accept common column names
-    possible_cols = ["Drug_code", "drug_code", "Drug Code", "DRUG_CODE"]
-    col = next((c for c in possible_cols if c in df.columns), None)
-    if col is None:
-        raise ValueError(
-            f"Excel must contain a column named one of: {possible_cols}. Found: {list(df.columns)}"
-        )
+results = []
+today = datetime.today().date()
 
-    codes = [normalize_drug_code(x) for x in df[col].tolist()]
-    codes = [c for c in codes if c]
-    # Unique, preserve order
-    seen = set()
-    uniq = []
-    for c in codes:
-        if c not in seen:
-            seen.add(c)
-            uniq.append(c)
-    return uniq
+unique_codes = df_input["Drug_code"].dropna().unique()
 
+for drug_code in unique_codes:
+    pm_date_str, url, note = fetch_pm_date_from_dpd(drug_code)
 
-def load_history(path: Path) -> pd.DataFrame:
-    if path.exists():
-        df = pd.read_csv(path, dtype=str)
-        # Ensure expected columns exist
-        expected = ["drug_code", "pm_update_date", "detected_on", "dpd_url"]
-        for c in expected:
-            if c not in df.columns:
-                # If older format, add missing columns
-                df[c] = ""
-        df = df[expected].copy()
-        df["drug_code"] = df["drug_code"].apply(normalize_drug_code)
-        df["pm_update_date"] = df["pm_update_date"].fillna("").astype(str)
-        return df
-    else:
-        return pd.DataFrame(columns=["drug_code", "pm_update_date", "detected_on", "dpd_url"])
+    results.append({
+        "drug_code": drug_code,
+        "dpd_url": url,
+        "pm_update_date": pm_date_str,  # string YYYY-MM-DD ou None
+        "fetch_status": note,
+        "checked_on": today
+    })
 
+df_current = pd.DataFrame(results)
 
-def build_current_snapshot(drug_codes: List[str]) -> pd.DataFrame:
-    rows = []
-    today = date.today().isoformat()
+# ==============================
+# 3️⃣ NORMALISATION / NETTOYAGE
+# ==============================
+df_current["drug_code"] = df_current["drug_code"].astype(str)
 
-    for idx, code in enumerate(drug_codes, start=1):
-        dpd_url = DPD_URL_TEMPLATE.format(drug_code=code)
-        print(f"Progress: {idx}/{len(drug_codes)} | fetching {code} ...")
+df_current["pm_update_date"] = pd.to_datetime(
+    df_current["pm_update_date"],
+    errors="coerce"
+).dt.date
 
-        pm_date = ""
-        try:
-            html = request_with_retry(dpd_url)
-            found = extract_pm_update_date_from_html(html)
-            pm_date = found or ""
-        except Exception as e:
-            print(f"  ⚠️ Error fetching/parsing drug_code={code}: {e}", file=sys.stderr)
+# On garde aussi les lignes sans date (utile pour debug), mais tu peux filtrer si tu veux.
+# df_current = df_current.dropna(subset=["drug_code", "pm_update_date"])
 
-        rows.append(
-            {
-                "drug_code": code,
-                "pm_update_date": pm_date,
-                "detected_on": today,
-                "dpd_url": dpd_url,
-            }
-        )
-        time.sleep(SLEEP_BETWEEN)
+# 1 ligne par drug_code (si jamais doublons)
+df_current = (
+    df_current
+    .sort_values(["drug_code", "pm_update_date"])
+    .drop_duplicates(subset=["drug_code"], keep="last")
+    .sort_values("drug_code")
+)
 
-    df = pd.DataFrame(rows)
-    # Normalize date field
-    df["pm_update_date"] = df["pm_update_date"].fillna("").apply(normalize_date_string)
-    return df
+# ==============================
+# 4️⃣ SAUVEGARDE DU DATASET (POWER BI)
+# ==============================
+# Dataset principal (inclut url + statut + checked_on)
+df_current.to_csv(DATASET_FILE, index=False)
+print(f"✅ Dataset Power BI généré : {DATASET_FILE}")
 
+# ==============================
+# 5️⃣ GESTION DE L’HISTORIQUE (ROBUSTE)
+# ==============================
+EXPECTED_COLS = ["drug_code", "pm_update_date", "detected_on", "dpd_url"]
 
-def add_has_changed(df_current: pd.DataFrame, df_history: pd.DataFrame) -> pd.DataFrame:
-    """
-    Merge current snapshot with history on drug_code and compute has_changed.
-    - has_changed = 1 if old pm_update_date exists and differs from current pm_update_date
-    - else 0
-    """
-    hist_small = df_history[["drug_code", "pm_update_date"]].copy()
-    hist_small.rename(columns={"pm_update_date": "pm_update_date_old"}, inplace=True)
+if HISTORY_FILE.exists():
+    df_history = pd.read_csv(HISTORY_FILE)
 
-    df = df_current.merge(hist_small, on="drug_code", how="left")
+    if not set(EXPECTED_COLS).issubset(df_history.columns):
+        print("⚠️ Historique existant avec ancien format détecté → réinitialisation")
+        df_history = pd.DataFrame(columns=EXPECTED_COLS)
+else:
+    df_history = pd.DataFrame(columns=EXPECTED_COLS)
 
-    df["pm_update_date_old"] = df["pm_update_date_old"].fillna("").astype(str)
-    df["pm_update_date"] = df["pm_update_date"].fillna("").astype(str)
+# Normalisation des types
+df_history["drug_code"] = df_history["drug_code"].astype(str)
 
-    df["has_changed"] = (
-        (df["pm_update_date_old"] != "") &
-        (df["pm_update_date"] != "") &
-        (df["pm_update_date"] != df["pm_update_date_old"])
-    ).astype(int)
+df_history["pm_update_date"] = pd.to_datetime(
+    df_history["pm_update_date"], errors="coerce"
+).dt.date
 
-    # Optional: if current is blank but old exists, you may want has_changed=0 (default here)
-    return df
+df_history["detected_on"] = pd.to_datetime(
+    df_history["detected_on"], errors="coerce"
+).dt.date
 
+# ==============================
+# Détection des changements (vs dernière date connue)
+# ==============================
+last_known = (
+    df_history
+    .sort_values("detected_on")
+    .drop_duplicates("drug_code", keep="last")
+)
 
-def main():
-    print(f"📥 Lecture Excel: {INPUT_EXCEL}")
-    drug_codes = load_drug_codes_from_excel(INPUT_EXCEL)
-    print(f"✅ {len(drug_codes)} drug_code à vérifier")
+merged = df_current.merge(
+    last_known[["drug_code", "pm_update_date", "detected_on", "dpd_url"]],
+    on="drug_code",
+    how="left",
+    suffixes=("", "_old")
+)
 
-    df_history = load_history(HISTORY_CSV)
-    if len(df_history) > 0:
-        print(f"📚 Historique chargé: {HISTORY_CSV} ({len(df_history)} lignes)")
-    else:
-        print(f"📚 Aucun historique trouvé, création: {HISTORY_CSV}")
+# Détecte :
+# - UPDATED : pm_update_date différente
+# - NEW : pas de date précédente (pm_update_date_old est NaN)
+# On ignore les cas où pm_update_date est NaN (pas de date trouvée), pour éviter de loguer du bruit
+changed = merged[
+    merged["pm_update_date"].notna() &
+    (
+        merged["pm_update_date_old"].isna() |
+        (merged["pm_update_date"] != merged["pm_update_date_old"])
+    )
+].copy()
 
-    # Build snapshot from DPD
-    df_current = build_current_snapshot(drug_codes)
+changed["detected_on"] = today
 
-    # Compute has_changed
-    df_comp = add_has_changed(df_current, df_history)
+new_history_rows = changed[[
+    "drug_code",
+    "pm_update_date",
+    "detected_on",
+    "dpd_url"
+]]
 
-    # Create updates file for Power BI
-    df_updates = df_comp[["drug_code", "pm_update_date", "dpd_url", "has_changed"]].copy()
-    df_updates.to_csv(OUTPUT_UPDATES_CSV, index=False, encoding="utf-8")
-    print(f"✅ Dataset Power BI généré : {OUTPUT_UPDATES_CSV}")
+# Append et sauvegarde
+df_history = pd.concat([df_history, new_history_rows], ignore_index=True)
+df_history.to_csv(HISTORY_FILE, index=False)
 
-    # Update history (store latest known values)
-    df_history_new = df_current[["drug_code", "pm_update_date", "detected_on", "dpd_url"]].copy()
-    df_history_new.to_csv(HISTORY_CSV, index=False, encoding="utf-8")
-    print(f"✅ Historique mis à jour : {HISTORY_CSV}")
+print(f"✅ Historique mis à jour : {HISTORY_FILE}")
 
-    # Summary
-    changed = int(df_updates["has_changed"].sum())
-    print(f"📌 Changements détectés: {changed}")
-    if changed > 0:
-        print("🔎 Liste des drug_code modifiés:")
-        print(df_updates.loc[df_updates["has_changed"] == 1, ["drug_code", "pm_update_date", "dpd_url"]].to_string(index=False))
+# ==============================
+# 6️⃣ RÉSUMÉ
+# ==============================
+print("📊 Résumé exécution")
+print(f"- Drug codes vérifiés : {df_current.shape[0]}")
+print(f"- Dates PM trouvées : {df_current['pm_update_date'].notna().sum()}")
+print(f"- Changements logués (NEW/UPDATED) : {new_history_rows.shape[0]}")
 
-
-if __name__ == "__main__":
-    main()
+# Optionnel: affiche les codes sans date (debug)
+missing = df_current[df_current["pm_update_date"].isna()][["drug_code","fetch_status","dpd_url"]]
+if not missing.empty:
+    print("\n⚠️ Codes sans date PM trouvée (à investiguer) :")
+    print(missing.to_string(index=False))
