@@ -1,5 +1,5 @@
 drug_code,dpd_url,pm_update_date,fetch_status,checked_on,pm_update_date_old,has_changed
-100621,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=100621,2021-06-09,OK,2026-03-05,2021-06-09,1
+100621,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=100621,2021-06-09,OK,2026-03-05,2021-06-09,0
 100622,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=100622,2021-06-09,OK,2026-03-05,2021-06-09,0
 100623,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=100623,2021-06-09,OK,2026-03-05,2021-06-09,0
 102098,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=102098,2022-10-12,OK,2026-03-05,2022-10-12,0
@@ -21,7 +21,7 @@ drug_code,dpd_url,pm_update_date,fetch_status,checked_on,pm_update_date_old,has_
 36346,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=36346,2019-03-01,OK,2026-03-05,2019-03-01,0
 78784,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=78784,2024-03-22,OK,2026-03-05,2024-03-22,0
 78785,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=78785,2024-03-22,OK,2026-03-05,2024-03-22,0
-84031,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84031,2024-06-27,OK,2026-03-05,2024-06-27,0
+84031,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84031,,REQUEST_ERR: ReadTimeout,2026-03-05,2024-06-27,0
 84080,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84080,2023-10-03,OK,2026-03-05,2023-10-03,0
 84081,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84081,2023-10-03,OK,2026-03-05,2023-10-03,0
 84082,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84082,2023-10-03,OK,2026-03-05,2023-10-03,0
@@ -54,8 +54,8 @@ drug_code,dpd_url,pm_update_date,fetch_status,checked_on,pm_update_date_old,has_
 88327,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88327,2023-09-29,OK,2026-03-05,2023-09-29,0
 88381,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88381,2025-07-14,OK,2026-03-05,2025-07-14,0
 88382,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88382,2025-07-14,OK,2026-03-05,2025-07-14,0
-88462,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88462,2023-08-10,OK,2026-03-05,2023-08-10,0
-88463,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88463,2023-08-10,OK,2026-03-05,2023-08-10,0
+88462,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88462,,REQUEST_ERR: ReadTimeout,2026-03-05,2023-08-10,0
+88463,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88463,,REQUEST_ERR: ReadTimeout,2026-03-05,2023-08-10,0
 88464,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88464,2023-08-10,OK,2026-03-05,2023-08-10,0
 88630,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88630,2024-08-29,OK,2026-03-05,2024-08-29,0
 89149,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89149,2025-12-17,OK,2026-03-05,2025-12-17,0
