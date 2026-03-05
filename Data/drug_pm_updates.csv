@@ -9,7 +9,7 @@ drug_code,dpd_url,pm_update_date,fetch_status,checked_on,pm_update_date_old,has_
 103004,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103004,2023-09-12,OK,2026-03-05,2023-09-12,0
 103006,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103006,2023-09-12,OK,2026-03-05,2023-09-12,0
 103457,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103457,2024-08-28,OK,2026-03-05,2024-08-28,0
-103458,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103458,2024-08-28,OK,2026-03-05,2024-08-28,0
+103458,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103458,2024-08-28,OK,2026-03-05,2024-08-28,1
 103459,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103459,2024-08-28,OK,2026-03-05,2024-08-28,0
 103590,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103590,2025-10-28,OK,2026-03-05,2025-10-28,0
 103802,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103802,2024-06-25,OK,2026-03-05,2024-06-25,0
