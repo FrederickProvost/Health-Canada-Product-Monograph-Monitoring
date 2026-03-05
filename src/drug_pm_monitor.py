@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Health Canada DPD - Product Monograph monitoring
-- Input:  Drugcode_à_vérifier.xlsx (colonne: Drug_code)
+- Input:  Drugcode_a_verifier.xlsx (colonne: Drug_code)
 - Output: Data/drug_pm_updates.csv (avec has_changed)
 - History: Data/dpd_pm_history.csv (drug_code, pm_update_date, detected_on, dpd_url)
 
@@ -31,7 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]  # repo root assuming src/drug_pm_mon
 DATA_DIR = ROOT / "Data"
 DATA_DIR.mkdir(exist_ok=True)
 
-INPUT_EXCEL = ROOT / "Drugcode_à_vérifier.xlsx"
+INPUT_EXCEL = ROOT / "Drugcode_a_verifier.xlsx"
 HISTORY_CSV = DATA_DIR / "dpd_pm_history.csv"
 OUTPUT_UPDATES_CSV = DATA_DIR / "drug_pm_updates.csv"
 
