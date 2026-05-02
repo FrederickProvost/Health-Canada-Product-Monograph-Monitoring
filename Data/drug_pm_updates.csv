@@ -1,145 +1,145 @@
 drug_code,dpd_url,pm_update_date,fetch_status,checked_on,pm_update_date_old,has_changed
-100621,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=100621,,REQUEST_ERR: ConnectTimeout,2026-05-01,2021-06-09,0
-100622,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=100622,,REQUEST_ERR: ConnectTimeout,2026-05-01,2021-06-09,0
-100623,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=100623,,REQUEST_ERR: ConnectTimeout,2026-05-01,2021-06-09,0
-102098,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=102098,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-10-12,0
-102099,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=102099,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-10-12,0
-102358,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=102358,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-01-23,0
-102504,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=102504,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-03-15,0
-103004,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103004,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-09-12,0
-103006,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103006,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-09-12,0
-103457,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103457,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-08-28,0
-103458,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103458,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-08-28,0
-103459,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103459,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-08-28,0
-103590,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103590,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-10-28,0
-103802,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103802,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-03-30,0
-103812,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103812,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-06-28,0
-103813,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103813,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-06-28,0
-103828,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103828,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-07-04,0
-103829,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103829,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-07-04,0
-103830,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103830,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-07-04,0
-103931,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103931,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-08-06,0
-103932,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103932,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-08-06,0
-36346,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=36346,,REQUEST_ERR: ConnectTimeout,2026-05-01,2019-03-01,0
-84031,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84031,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-06-27,0
-84080,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84080,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-10-03,0
-84081,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84081,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-10-03,0
-84082,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84082,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-10-03,0
-84649,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84649,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-07-08,0
-85700,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=85700,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-06-03,0
-85701,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=85701,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-06-03,0
-85702,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=85702,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-06-03,0
-85857,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=85857,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-07-06,0
-86553,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=86553,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-07-14,0
-86554,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=86554,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-07-14,0
-86591,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=86591,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-11-23,0
-86592,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=86592,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-11-23,0
-86593,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=86593,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-11-23,0
-87120,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87120,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-04-17,0
-87121,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87121,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-04-17,0
-87127,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87127,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-11-10,0
-87128,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87128,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-11-10,0
-87407,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87407,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-04-04,0
-87408,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87408,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-04-04,0
-87695,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87695,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-08-20,0
-87696,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87696,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-08-20,0
-88430,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88430,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-11-06,0
-88431,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88431,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-11-06,0
-88432,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88432,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-11-06,0
-88462,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88462,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-08-10,0
-88463,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88463,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-08-10,0
-88464,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88464,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-08-10,0
-88628,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88628,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-08-29,0
-88629,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88629,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-08-29,0
-88630,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88630,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-08-29,0
-88696,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88696,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-12-29,0
-88697,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88697,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-12-29,0
-89149,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89149,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-12-17,0
-89150,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89150,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-12-17,0
-89151,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89151,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-12-17,0
-89547,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89547,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-04-24,0
-89548,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89548,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-04-24,0
-89549,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89549,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-04-24,0
-89558,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89558,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-05-16,0
-89559,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89559,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-05-16,0
-89560,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89560,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-05-16,0
-89561,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89561,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-05-16,0
-89987,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89987,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-09-28,0
-89988,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89988,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-09-28,0
-90072,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90072,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-10-25,0
-90073,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90073,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-10-25,0
-90074,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90074,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-10-25,0
-90075,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90075,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-10-25,0
-90076,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90076,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-10-25,0
-90077,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90077,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-10-25,0
-90078,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90078,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-10-25,0
-90079,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90079,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-10-25,0
-90466,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90466,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-04-13,0
-90467,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90467,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-04-13,0
-90572,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90572,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-09-25,0
-90658,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90658,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-05-09,0
-90660,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90660,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-05-09,0
-90695,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90695,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-02-02,0
-90696,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90696,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-02-02,0
-90870,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90870,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-03-01,0
-90871,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90871,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-03-01,0
-91148,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=91148,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-03-28,0
-91167,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=91167,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-11-25,0
-91325,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=91325,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-05-16,0
-91539,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=91539,,REQUEST_ERR: ConnectTimeout,2026-05-01,2020-03-31,0
-91540,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=91540,,REQUEST_ERR: ConnectTimeout,2026-05-01,2020-03-31,0
-91541,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=91541,,REQUEST_ERR: ConnectTimeout,2026-05-01,2020-03-31,0
-92194,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=92194,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-12-31,0
-92195,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=92195,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-12-31,0
-92207,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=92207,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-10-15,0
-92372,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=92372,,REQUEST_ERR: ConnectTimeout,2026-05-01,2021-02-05,0
-92373,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=92373,,REQUEST_ERR: ConnectTimeout,2026-05-01,2021-02-05,0
-92754,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=92754,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-12-31,0
-93136,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93136,,REQUEST_ERR: ConnectTimeout,2026-05-01,2021-07-07,0
-93137,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93137,,REQUEST_ERR: ConnectTimeout,2026-05-01,2021-07-07,0
-93170,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93170,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-11-30,0
-93437,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93437,,REQUEST_ERR: ConnectTimeout,2026-05-01,2017-06-12,0
-93438,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93438,,REQUEST_ERR: ConnectTimeout,2026-05-01,2017-06-12,0
-93439,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93439,,REQUEST_ERR: ConnectTimeout,2026-05-01,2017-06-12,0
-93440,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93440,,REQUEST_ERR: ConnectTimeout,2026-05-01,2017-06-12,0
-93699,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93699,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-02-09,0
-93700,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93700,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-02-09,0
-93701,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93701,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-02-09,0
-93702,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93702,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-02-09,0
-93703,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93703,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-02-09,0
-94054,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=94054,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-01-30,0
-94055,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=94055,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-01-30,0
-94056,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=94056,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-01-30,0
-94057,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=94057,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-01-30,0
-94108,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=94108,,REQUEST_ERR: ConnectTimeout,2026-05-01,2023-08-21,0
-94484,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=94484,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-03-23,0
-95045,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95045,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-10-15,0
-95046,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95046,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-10-15,0
-95062,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95062,,REQUEST_ERR: ConnectTimeout,2026-05-01,2017-03-31,0
-95063,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95063,,REQUEST_ERR: ConnectTimeout,2026-05-01,2017-03-31,0
-95355,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95355,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-08-05,0
-95356,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95356,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-08-05,0
-95357,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95357,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-08-05,0
-95358,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95358,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-08-05,0
-95359,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95359,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-08-05,0
-95533,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95533,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-04-17,0
-96300,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=96300,,REQUEST_ERR: ConnectTimeout,2026-05-01,2020-01-22,0
-96400,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=96400,,REQUEST_ERR: ConnectTimeout,2026-05-01,2020-06-16,0
-96401,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=96401,,REQUEST_ERR: ConnectTimeout,2026-05-01,2020-06-16,0
-96501,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=96501,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-02-12,0
-96502,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=96502,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-02-12,0
-96503,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=96503,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-02-12,0
-97082,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97082,,REQUEST_ERR: ConnectTimeout,2026-05-01,2019-12-09,0
-97083,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97083,,REQUEST_ERR: ConnectTimeout,2026-05-01,2019-12-09,0
-97084,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97084,,REQUEST_ERR: ConnectTimeout,2026-05-01,2019-12-09,0
-97439,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97439,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-02-25,0
-97440,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97440,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-02-25,0
-97441,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97441,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-02-25,0
-97442,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97442,,REQUEST_ERR: ConnectTimeout,2026-05-01,2026-02-25,0
-98137,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=98137,,REQUEST_ERR: ConnectTimeout,2026-05-01,2019-08-06,0
-98239,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=98239,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-05-26,0
-98240,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=98240,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-05-26,0
-98610,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=98610,,REQUEST_ERR: ConnectTimeout,2026-05-01,2022-06-09,0
-99162,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=99162,,REQUEST_ERR: ConnectTimeout,2026-05-01,2024-05-06,0
-99838,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=99838,,REQUEST_ERR: ConnectTimeout,2026-05-01,2025-07-15,0
-99859,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=99859,,REQUEST_ERR: ConnectTimeout,2026-05-01,2020-12-03,0
+100621.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=100621.0,,HTTP_400,2026-05-02,,0
+100622.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=100622.0,,HTTP_400,2026-05-02,,0
+100623.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=100623.0,,HTTP_400,2026-05-02,,0
+102098.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=102098.0,,HTTP_400,2026-05-02,,0
+102099.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=102099.0,,HTTP_400,2026-05-02,,0
+102358.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=102358.0,,HTTP_400,2026-05-02,,0
+102504.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=102504.0,,HTTP_400,2026-05-02,,0
+103004.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103004.0,,HTTP_400,2026-05-02,,0
+103006.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103006.0,,HTTP_400,2026-05-02,,0
+103457.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103457.0,,HTTP_400,2026-05-02,,0
+103458.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103458.0,,HTTP_400,2026-05-02,,0
+103459.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103459.0,,HTTP_400,2026-05-02,,0
+103590.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103590.0,,HTTP_400,2026-05-02,,0
+103802.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103802.0,,HTTP_400,2026-05-02,,0
+103812.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103812.0,,HTTP_400,2026-05-02,,0
+103813.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103813.0,,HTTP_400,2026-05-02,,0
+103828.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103828.0,,HTTP_400,2026-05-02,,0
+103829.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103829.0,,HTTP_400,2026-05-02,,0
+103830.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103830.0,,HTTP_400,2026-05-02,,0
+103931.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103931.0,,HTTP_400,2026-05-02,,0
+103932.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=103932.0,,HTTP_400,2026-05-02,,0
+36346.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=36346.0,,HTTP_400,2026-05-02,,0
+78784.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=78784.0,,HTTP_400,2026-05-02,,0
+78785.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=78785.0,,HTTP_400,2026-05-02,,0
+84031.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84031.0,,HTTP_400,2026-05-02,,0
+84080.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84080.0,,HTTP_400,2026-05-02,,0
+84081.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84081.0,,HTTP_400,2026-05-02,,0
+84082.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84082.0,,HTTP_400,2026-05-02,,0
+84649.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=84649.0,,HTTP_400,2026-05-02,,0
+85458.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=85458.0,,HTTP_400,2026-05-02,,0
+85857.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=85857.0,,HTTP_400,2026-05-02,,0
+86553.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=86553.0,,HTTP_400,2026-05-02,,0
+86554.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=86554.0,,HTTP_400,2026-05-02,,0
+86591.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=86591.0,,HTTP_400,2026-05-02,,0
+86592.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=86592.0,,HTTP_400,2026-05-02,,0
+86593.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=86593.0,,HTTP_400,2026-05-02,,0
+87120.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87120.0,,HTTP_400,2026-05-02,,0
+87121.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87121.0,,HTTP_400,2026-05-02,,0
+87127.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87127.0,,HTTP_400,2026-05-02,,0
+87128.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87128.0,,HTTP_400,2026-05-02,,0
+87407.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87407.0,,HTTP_400,2026-05-02,,0
+87408.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87408.0,,HTTP_400,2026-05-02,,0
+87695.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87695.0,,HTTP_400,2026-05-02,,0
+87696.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=87696.0,,HTTP_400,2026-05-02,,0
+88298.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88298.0,,HTTP_400,2026-05-02,,0
+88324.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88324.0,,HTTP_400,2026-05-02,,0
+88326.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88326.0,,HTTP_400,2026-05-02,,0
+88327.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88327.0,,HTTP_400,2026-05-02,,0
+88381.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88381.0,,HTTP_400,2026-05-02,,0
+88382.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88382.0,,HTTP_400,2026-05-02,,0
+88462.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88462.0,,HTTP_400,2026-05-02,,0
+88463.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88463.0,,HTTP_400,2026-05-02,,0
+88464.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88464.0,,HTTP_400,2026-05-02,,0
+88628.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88628.0,,HTTP_400,2026-05-02,,0
+88629.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88629.0,,HTTP_400,2026-05-02,,0
+88630.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=88630.0,,HTTP_400,2026-05-02,,0
+89149.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89149.0,,HTTP_400,2026-05-02,,0
+89150.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89150.0,,HTTP_400,2026-05-02,,0
+89151.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89151.0,,HTTP_400,2026-05-02,,0
+89547.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89547.0,,HTTP_400,2026-05-02,,0
+89548.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89548.0,,HTTP_400,2026-05-02,,0
+89549.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89549.0,,HTTP_400,2026-05-02,,0
+89558.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89558.0,,HTTP_400,2026-05-02,,0
+89559.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89559.0,,HTTP_400,2026-05-02,,0
+89560.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89560.0,,HTTP_400,2026-05-02,,0
+89561.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89561.0,,HTTP_400,2026-05-02,,0
+89987.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89987.0,,HTTP_400,2026-05-02,,0
+89988.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=89988.0,,HTTP_400,2026-05-02,,0
+90072.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90072.0,,HTTP_400,2026-05-02,,0
+90073.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90073.0,,HTTP_400,2026-05-02,,0
+90074.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90074.0,,HTTP_400,2026-05-02,,0
+90075.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90075.0,,HTTP_400,2026-05-02,,0
+90076.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90076.0,,HTTP_400,2026-05-02,,0
+90077.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90077.0,,HTTP_400,2026-05-02,,0
+90078.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90078.0,,HTTP_400,2026-05-02,,0
+90079.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90079.0,,HTTP_400,2026-05-02,,0
+90327.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90327.0,,HTTP_400,2026-05-02,,0
+90328.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90328.0,,HTTP_400,2026-05-02,,0
+90572.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90572.0,,HTTP_400,2026-05-02,,0
+90658.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90658.0,,HTTP_400,2026-05-02,,0
+90660.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90660.0,,HTTP_400,2026-05-02,,0
+90695.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90695.0,,HTTP_400,2026-05-02,,0
+90696.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90696.0,,HTTP_400,2026-05-02,,0
+90870.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90870.0,,HTTP_400,2026-05-02,,0
+90871.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=90871.0,,HTTP_400,2026-05-02,,0
+91060.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=91060.0,,HTTP_400,2026-05-02,,0
+91148.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=91148.0,,HTTP_400,2026-05-02,,0
+91325.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=91325.0,,HTTP_400,2026-05-02,,0
+91539.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=91539.0,,HTTP_400,2026-05-02,,0
+91540.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=91540.0,,HTTP_400,2026-05-02,,0
+91541.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=91541.0,,HTTP_400,2026-05-02,,0
+92194.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=92194.0,,HTTP_400,2026-05-02,,0
+92195.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=92195.0,,HTTP_400,2026-05-02,,0
+92207.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=92207.0,,HTTP_400,2026-05-02,,0
+92372.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=92372.0,,HTTP_400,2026-05-02,,0
+92373.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=92373.0,,HTTP_400,2026-05-02,,0
+92754.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=92754.0,,HTTP_400,2026-05-02,,0
+93136.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93136.0,,HTTP_400,2026-05-02,,0
+93137.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93137.0,,HTTP_400,2026-05-02,,0
+93169.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93169.0,,HTTP_400,2026-05-02,,0
+93170.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93170.0,,HTTP_400,2026-05-02,,0
+93437.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93437.0,,HTTP_400,2026-05-02,,0
+93438.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93438.0,,HTTP_400,2026-05-02,,0
+93439.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93439.0,,HTTP_400,2026-05-02,,0
+93699.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93699.0,,HTTP_400,2026-05-02,,0
+93700.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93700.0,,HTTP_400,2026-05-02,,0
+93701.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93701.0,,HTTP_400,2026-05-02,,0
+93702.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93702.0,,HTTP_400,2026-05-02,,0
+93703.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=93703.0,,HTTP_400,2026-05-02,,0
+94054.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=94054.0,,HTTP_400,2026-05-02,,0
+94055.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=94055.0,,HTTP_400,2026-05-02,,0
+94056.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=94056.0,,HTTP_400,2026-05-02,,0
+94057.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=94057.0,,HTTP_400,2026-05-02,,0
+94108.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=94108.0,,HTTP_400,2026-05-02,,0
+94484.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=94484.0,,HTTP_400,2026-05-02,,0
+95045.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95045.0,,HTTP_400,2026-05-02,,0
+95046.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95046.0,,HTTP_400,2026-05-02,,0
+95062.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95062.0,,HTTP_400,2026-05-02,,0
+95063.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95063.0,,HTTP_400,2026-05-02,,0
+95355.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95355.0,,HTTP_400,2026-05-02,,0
+95356.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95356.0,,HTTP_400,2026-05-02,,0
+95357.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95357.0,,HTTP_400,2026-05-02,,0
+95358.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95358.0,,HTTP_400,2026-05-02,,0
+95359.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95359.0,,HTTP_400,2026-05-02,,0
+95533.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=95533.0,,HTTP_400,2026-05-02,,0
+96300.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=96300.0,,HTTP_400,2026-05-02,,0
+96400.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=96400.0,,HTTP_400,2026-05-02,,0
+96401.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=96401.0,,HTTP_400,2026-05-02,,0
+96501.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=96501.0,,HTTP_400,2026-05-02,,0
+96502.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=96502.0,,HTTP_400,2026-05-02,,0
+96503.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=96503.0,,HTTP_400,2026-05-02,,0
+97082.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97082.0,,HTTP_400,2026-05-02,,0
+97083.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97083.0,,HTTP_400,2026-05-02,,0
+97084.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97084.0,,HTTP_400,2026-05-02,,0
+97439.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97439.0,,HTTP_400,2026-05-02,,0
+97440.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97440.0,,HTTP_400,2026-05-02,,0
+97441.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97441.0,,HTTP_400,2026-05-02,,0
+97442.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=97442.0,,HTTP_400,2026-05-02,,0
+98137.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=98137.0,,HTTP_400,2026-05-02,,0
+98239.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=98239.0,,HTTP_400,2026-05-02,,0
+98240.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=98240.0,,HTTP_400,2026-05-02,,0
+98610.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=98610.0,,HTTP_400,2026-05-02,,0
+99838.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=99838.0,,HTTP_400,2026-05-02,,0
+99859.0,https://health-products.canada.ca/dpd-bdpp/info?lang=en&code=99859.0,,HTTP_400,2026-05-02,,0
