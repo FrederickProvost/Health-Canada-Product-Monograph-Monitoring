@@ -4,6 +4,7 @@ from datetime import datetime
 import re
 import requests
 import time
+import random
 
 # ==============================
 # CONFIG
@@ -23,12 +24,19 @@ HISTORY_FILE = DATA_DIR / "dpd_pm_history.csv"
 
 BASE_URL = "https://health-products.canada.ca/dpd-bdpp/info?lang=en&code={code}"
 
+# ✅ User agents rotation (important GitHub Actions)
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+    "Mozilla/5.0 (X11; Linux x86_64)"
+]
+
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; PM-Monitor/1.0)",
+    "User-Agent": random.choice(USER_AGENTS),
     "Accept-Language": "en-CA,en;q=0.9,fr-CA;q=0.8"
 }
 
-# Session HTTP (important pour stabilité)
+# ✅ Session persistante
 session = requests.Session()
 session.headers.update(HEADERS)
 
@@ -49,14 +57,15 @@ df_input["Drug_code"] = df_input["Drug_code"].astype(str).str.strip()
 unique_codes = df_input["Drug_code"].dropna().unique()
 
 # ==============================
-# 2️⃣ FETCH ROBUSTE
+# 2️⃣ FETCH ROBUSTE (GITHUB SAFE)
 # ==============================
-def fetch_pm_date_from_dpd(drug_code: str, max_retries=3):
+def fetch_pm_date_from_dpd(drug_code: str, max_retries=5):
+
     url = BASE_URL.format(code=drug_code)
 
     for attempt in range(1, max_retries + 1):
         try:
-            r = session.get(url, timeout=(10, 30))  # (connect, read)
+            r = session.get(url, timeout=(20, 60))
 
             if r.status_code == 200:
                 html = r.text
@@ -78,7 +87,7 @@ def fetch_pm_date_from_dpd(drug_code: str, max_retries=3):
                 return (None, url, "NOT_FOUND")
 
             elif r.status_code in [429, 403, 500, 502, 503]:
-                wait = attempt * 2
+                wait = attempt * 4
                 print(f"⚠️ Retry {attempt}/{max_retries} - {drug_code} (HTTP {r.status_code}) → wait {wait}s")
                 time.sleep(wait)
 
@@ -86,35 +95,44 @@ def fetch_pm_date_from_dpd(drug_code: str, max_retries=3):
                 return (None, url, f"HTTP_{r.status_code}")
 
         except requests.exceptions.ConnectTimeout:
-            wait = attempt * 3
+            wait = attempt * 5
             print(f"⏱️ ConnectTimeout {drug_code} → retry {attempt} wait {wait}s")
             time.sleep(wait)
 
         except requests.exceptions.ReadTimeout:
-            wait = attempt * 3
+            wait = attempt * 5
             print(f"⏱️ ReadTimeout {drug_code} → retry {attempt} wait {wait}s")
             time.sleep(wait)
 
         except requests.RequestException as e:
             return (None, url, f"REQUEST_ERR: {type(e).__name__}")
 
-    return (None, url, "FAILED_AFTER_RETRIES")
+    # ✅ fallback final
+    print(f"❌ Failed after retries: {drug_code}")
+    try:
+        r = session.get(url, timeout=(20, 60))
+        if r.status_code == 200:
+            m = re.search(r"([0-9]{4}-[0-9]{2}-[0-9]{2})", r.text)
+            if m:
+                return (m.group(1), url, "OK_FALLBACK")
+    except:
+        pass
+
+    return (None, url, "FAILED")
 
 # ==============================
-# 3️⃣ LOOP AVEC THROTTLE
+# 3️⃣ LOOP AVEC THROTTLE (CRITIQUE GITHUB)
 # ==============================
 results = []
 today = datetime.today().date()
 
 for i, drug_code in enumerate(unique_codes):
 
-    # 🔥 throttle anti-blocage
-    time.sleep(1.5)
+    time.sleep(2.5)
 
-    # pause supplémentaire toutes les 5 requêtes
-    if i % 5 == 0 and i != 0:
+    if i % 3 == 0 and i != 0:
         print("⏸️ Pause anti-blocage")
-        time.sleep(5)
+        time.sleep(8)
 
     print(f"🌍 Fetching: {drug_code}")
 
@@ -133,6 +151,8 @@ df_current = pd.DataFrame(results)
 # ==============================
 # 4️⃣ NORMALISATION
 # ==============================
+df_current["drug_code"] = df_current["drug_code"].astype(str).str.strip()
+
 df_current["pm_update_date"] = pd.to_datetime(
     df_current["pm_update_date"],
     errors="coerce"
@@ -145,18 +165,18 @@ df_current = (
 )
 
 # ==============================
-# 5️⃣ HISTORIQUE
+# 5️⃣ HISTORIQUE (FIX MERGE ✅)
 # ==============================
 EXPECTED_COLS = ["drug_code", "pm_update_date", "detected_on", "dpd_url"]
 
 if HISTORY_FILE.exists():
-    df_history = pd.read_csv(HISTORY_FILE)
-
-    if not set(EXPECTED_COLS).issubset(df_history.columns):
-        print("⚠️ reset historique")
-        df_history = pd.DataFrame(columns=EXPECTED_COLS)
+    df_history = pd.read_csv(HISTORY_FILE, dtype={"drug_code": str})
 else:
     df_history = pd.DataFrame(columns=EXPECTED_COLS)
+
+# ✅ FIX type merge (CRITIQUE)
+df_current["drug_code"] = df_current["drug_code"].astype(str).str.strip()
+df_history["drug_code"] = df_history["drug_code"].astype(str).str.strip()
 
 df_history["pm_update_date"] = pd.to_datetime(df_history["pm_update_date"], errors="coerce").dt.date
 df_history["detected_on"] = pd.to_datetime(df_history["detected_on"], errors="coerce").dt.date
@@ -168,6 +188,7 @@ last_known = (
     .rename(columns={"pm_update_date": "pm_update_date_old"})
 )
 
+# ✅ MERGE SAFE
 merged = df_current.merge(
     last_known[["drug_code", "pm_update_date_old"]],
     on="drug_code",
@@ -203,7 +224,6 @@ df_history = pd.concat([
 ], ignore_index=True)
 
 df_history.to_csv(HISTORY_FILE, index=False)
-
 print(f"✅ Historique mis à jour : {HISTORY_FILE}")
 
 # ==============================
